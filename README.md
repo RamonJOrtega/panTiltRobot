@@ -8,4 +8,4 @@ If you want to use this code for your arduino project, you will have to download
 
 ![alt text](https://github.com/RamonJustisOrtega/panTiltRobot/blob/main/Robot%20Render%20and%20Component%20Label.png)
 
-![alt text](https://github.com/RamonJustisOrtega/panTiltRobot/blob/main/Wiring%20Diagram.pptx)
+![alt text](https://github.com/RamonJustisOrtega/panTiltRobot/blob/main/Wiring%20Diagram.png)
