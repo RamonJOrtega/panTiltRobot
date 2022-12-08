@@ -1,0 +1,5 @@
+function [AnglesFiltered,dAnglesGyroFiltered] = ComplementaryFiltering(Angles,AnglesGyro,AnglesFilteredOld)
+    
+    dAnglesGyroFiltered=ComputeGyroFromEuler(AnglesFilteredOld,AnglesFiltered-AnglesFilteredOld);
+end
+

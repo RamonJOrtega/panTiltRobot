@@ -1,0 +1,43 @@
+function [Angle,] = ComputeAnglesByMagnAcc(AngleOld,R_AccF,R_MagnF,PsiMagnOld)
+    Angle=[0 0 0]';
+    %x //:Offset y=0.0034, SF_Z=1.0274,OF_>=0.364
+    if(abs(R_AccF(1,1))>0.92)
+        AxisParallel=[1 0 0]';
+    else
+        %y //:OF_Z=0.0156,OF_X=1.37,SF_X=0.72
+        if(abs(R_AccF(2,1))>0.92)
+            AxisParallel=[0 1 0]';
+        else
+            if(abs(R_AccF(3,1))>0.92)
+                AxisParallel=[0 0 1]';
+                Angle(1,1)=asind(R_AccF(2,1));
+                Angle(2,1)=asind(R_AccF(1,1));
+
+                Bx=R_MagnF(1,1)*cosd(Angle(2,1))+R_MagnF(3,1)*sind(-Angle(2,1));
+                By=R_MagnF(1,1)*sind(Angle(1,1))*sind(-Angle(2,1))+R_MagnF(2,1)*cosd(Angle(1,1))-R_MagnF(3,1)*sind(Angle(1,1))*cosd(Angle(2,1));
+                
+                PsiMagn=atan2((By*1.0672+0.1075),(Bx+0.3159))*180/pi-PsiMagnOld;
+                dPsiMagn=atan2((By*1.0672+0.1075),(Bx+0.3159))*180/pi-PsiMagnOld;
+                dTetaMagn=((Angle(2,1)-AngleOld(2,1))-sind(AngleOld(1,1))*dPsiMagn)/cosd(AngleOld(1,1));
+                dPsiEuler=1/cosd(AngleOld(2,1))*(sind(AngleOld(1,1))*dTetaMagn+cosd(AngleOld(1,1))*dPsiMagn);
+                Angle(3,1)=AngleOld(3,1)+dPsiEuler;
+            else
+                AxisParallel=[0 0 0]';
+                Angle(1,1)=asind(R_AccF(2,1));
+                Angle(2,1)=asind(R_AccF(1,1));
+
+                Bx=R_MagnF(1,1)*cosd(Angle(2,1))+R_MagnF(3,1)*sind(-Angle(2,1));
+                By=R_MagnF(1,1)*sind(Angle(1,1))*sind(-Angle(2,1))+R_MagnF(2,1)*cosd(Angle(1,1))-R_MagnF(3,1)*sind(Angle(1,1))*cosd(Angle(2,1));
+
+                %Angle(3,1)=atan2((By*1.0672+0.1075),(Bx+0.3159))*180/pi;
+                PsiMagn=atan2((By*1.0672+0.1075),(Bx+0.3159));
+                dPsiMagn=atan2((By*1.0672+0.1075),(Bx+0.3159))*180/pi-PsiMagnOld;
+                dTetaMagn=((Angle(2,1)-AngleOld(2,1))-sind(AngleOld(1,1))*dPsiMagn)/cosd(AngleOld(1,1));
+                dPsiEuler=1/cosd(AngleOld(2,1))*(sind(AngleOld(1,1))*dTetaMagn+cosd(AngleOld(1,1))*dPsiMagn);
+                Angle(3,1)=AngleOld(3,1)+dPsiEuler;
+                %Angle(3,1)=acosd(R_AccF(3,1));
+            end
+        end
+    end
+end
+
