@@ -1,5 +1,5 @@
 # panTiltRobot
-This repository of arduino code was used to power the pan tilt robot shown below.
+This repository of arduino C was used to power the pan tilt robot shown below.
 This was a Mechatronics Final Project for my Masters Degree at Colorado School of Mines.
 The robot was a proof-of-concept for high speed object tracking.
 When it was functional, the robot took accelerometer and gyroscope input to keep the image vector pointing at its original target. All the vector transformation math is included in the repository code, but it should be noted that true image tracking is not included. This means you will have to write your image tracking code if you want to use the camera as an input sensor.
